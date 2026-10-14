@@ -1,0 +1,27 @@
+name: Game checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Check required files
+        run: |
+          test -f index.html
+          test -f styles.css
+          test -f game.js
+          test -f manifest.webmanifest
+          test -f sw.js
+          test -f icon.svg
+      - name: Check JavaScript syntax
+        run: node --check game.js
+      - name: Check PWA manifest JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest', 'utf8'))"
