@@ -95,7 +95,7 @@
       this.moves = 0;
       this.doorX = 240;
       this.doorY = 240;
-      this.player.setPosition(WIDTH / 2, 600);
+      this.player.setPosition(WIDTH / 2, 600).setScale(1).setAlpha(1).setDepth(0);
       this.clearWorld();
       this.levelText.setText('УРОВЕНЬ ' + (level + 1));
       const label = document.getElementById('level-label');
@@ -172,10 +172,7 @@
     }
 
     handleTap(x, y) {
-      if (this.completed) {
-        this.startLevel(this.level === 2 ? 0 : this.level + 1);
-        return;
-      }
+      if (this.completed) return;
 
       // Level 1: the exit works exactly as advertised.
       if (this.level === 0) {
